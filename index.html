@@ -4,36 +4,194 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Year 9 Maths: Mastery Exam</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        :root { --primary: #1a73e8; --bg: #f8f9fa; --card: #ffffff; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 0; }
-        .header { background: var(--primary); color: white; padding: 30px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .container { max-width: 800px; margin: 20px auto; padding: 10px; }
+        :root { --primary: #1a73e8; --bg: #f0f2f5; --card: #ffffff; --accent: #fb8c00; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; color: #3c4043; }
+        .header { background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white; padding: 40px 20px; text-align: center; }
+        .container { max-width: 850px; margin: -30px auto 50px; padding: 10px; }
         
-        /* Navigation Tabs */
-        .nav-tabs { display: flex; overflow-x: auto; gap: 10px; padding: 10px; sticky; top: 0; background: var(--bg); z-index: 100; }
-        .nav-btn { padding: 10px 20px; border: none; border-radius: 20px; background: #e1e4e8; cursor: pointer; white-space: nowrap; font-weight: 600; transition: 0.3s; }
+        .nav-tabs { display: flex; overflow-x: auto; gap: 8px; padding: 15px; sticky; top: 0; background: var(--bg); z-index: 1000; scrollbar-width: none; }
+        .nav-btn { padding: 12px 24px; border: none; border-radius: 25px; background: white; cursor: pointer; white-space: nowrap; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.3s; }
         .nav-btn.active { background: var(--primary); color: white; }
 
-        .unit-section { display: none; }
+        .unit-section { display: none; animation: fadeIn 0.4s; }
         .unit-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .card { background: var(--card); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .q-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; display: block; }
+        .card { background: var(--card); border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 4px solid transparent; }
+        .card:hover { border-top-color: var(--primary); }
+        .q-text { font-size: 1.2rem; margin-bottom: 20px; display: block; line-height: 1.5; }
         
-        .options { display: grid; gap: 10px; }
-        .opt-btn { padding: 12px; border: 2px solid #edeff2; border-radius: 8px; background: white; text-align: left; cursor: pointer; font-size: 1rem; transition: 0.2s; }
-        .opt-btn:hover { border-color: var(--primary); }
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        @media (max-width: 600px) { .options { grid-template-columns: 1fr; } }
+        
+        .opt-btn { padding: 14px; border: 2px solid #e8eaed; border-radius: 10px; background: white; text-align: left; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .opt-btn:hover { background: #f8f9fa; border-color: var(--primary); }
         .opt-btn.selected { background: #e8f0fe; border-color: var(--primary); color: var(--primary); font-weight: bold; }
 
-        .tip-toggle { background: none; border: none; color: #5f6368; text-decoration: underline; font-size: 0.9rem; cursor: pointer; margin-top: 10px; }
-        .tip-box { display: none; margin-top: 10px; padding: 10px; background: #fff4e5; border-radius: 6px; font-size: 0.9rem; border-left: 4px solid #ffa000; }
-
-        .email-section { background: #202124; color: white; border-radius: 12px; padding: 30px; text-align: center; margin-top: 40px; }
-        .email-input { width: 80%; padding: 12px; margin: 15px 0; border-radius: 6px; border: none; font-size: 1rem; }
-        .submit-btn { background: #34a853; color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+        .footer-tools { background: #202124; color: white; border-radius: 15px; padding: 40px; text-align: center; margin-top: 50px; }
+        .email-input { width: 100%; max-width: 400px; padding: 15px; margin: 20px 0; border-radius: 8px; border: none; font-size: 1rem; }
+        .submit-btn { background: #34a853; color: white; border: none; padding: 18px 50px; border-radius: 35px; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(52, 168, 83, 0.3); }
+        
+        .tip-box { display: none; margin-top: 15px; padding: 15px; background: #fff8e1; border-radius: 8px; font-size: 0.95rem; border-left: 5px solid var(--accent); color: #5f6368; }
+        .tip-toggle { background: none; border: none; color: var(--accent); font-weight: bold; cursor: pointer; margin-top: 15px; display: block; }
     </style>
 </head>
+<body>
+
+<div class="header">
+    <h1>Year 9 Mathematics Mastery</h1>
+    <p>50 Questions covering Units 1 - 5</p>
+</div>
+
+<div class="container">
+    <div class="nav-tabs">
+        <button class="nav-btn active" onclick="showUnit(1, this)">Unit 1: Indices</button>
+        <button class="nav-btn" onclick="showUnit(2, this)">Unit 2: Std Form</button>
+        <button class="nav-btn" onclick="showUnit(3, this)">Unit 3: Equations</button>
+        <button class="nav-btn" onclick="showUnit(4, this)">Unit 4: Algebra</button>
+        <button class="nav-btn" onclick="showUnit(5, this)">Unit 5: Graphs</button>
+    </div>
+
+    <form id="quizForm">
+        <div id="quiz-content"></div>
+
+        <div class="footer-tools">
+            <h2>Exam Complete?</h2>
+            <p>Ready to see your grade and email the report?</p>
+            <input type="email" id="userEmail" class="email-input" placeholder="Enter email for results..." required>
+            <br>
+            <button type="button" class="submit-btn" onclick="finishExam()">Generate & Email Report</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Full 50 Question Dataset based on your KOs
+    const examData = [
+        // UNIT 1: INDICES (Based on 10584.jpg)
+        { u: 1, q: "Simplify \\( a^6 \\times a^4 \\)", o: ["a^{24}", "a^{10}", "a^2", "6a^4"], a: 1, t: "Indices Rule: Multiply means Add powers." },
+        { u: 1, q: "Simplify \\( x^9 \\div x^3 \\)", o: ["x^3", "x^{12}", "x^6", "x^{27}"], a: 2, t: "Indices Rule: Divide means Subtract powers." },
+        { u: 1, q: "Simplify \\( (y^5)^3 \\)", o: ["y^8", "y^{15}", "y^2", "y^{53}"], a: 1, t: "Power of a Power: Multiply the indices." },
+        { u: 1, q: "What is the value of \\( 12^0 \\)?", o: ["0", "12", "1", "120"], a: 2, t: "Anything to the power of 0 is 1." },
+        { u: 1, q: "Solve \\( 5^{-2} \\)", o: ["-10", "1/10", "1/25", "25"], a: 2, t: "Negative power: \\( a^{-n} = \\frac{1}{a^n} \\)." },
+        { u: 1, q: "Evaluate \\( \sqrt{64} \\)", o: ["32", "16", "8", "4"], a: 2, t: "Find the number that multiplies by itself to get 64." },
+        { u: 1, q: "Simplify \\( 3a^2 \\times 4a^5 \\)", o: ["7a^7", "12a^{10}", "12a^7", "7a^{10}"], a: 2, t: "Multiply numbers, add powers." },
+        { u: 1, q: "Simplify \\( 20x^6 \\div 5x^2 \\)", o: ["4x^3", "4x^4", "15x^4", "4x^8"], a: 1, t: "Divide numbers, subtract powers." },
+        { u: 1, q: "Write as a power: \\( \frac{1}{x^3} \\)", o: ["x^3", "x^{-3}", "3^x", "-x^3"], a: 1, t: "The reciprocal is a negative power." },
+        { u: 1, q: "Simplify \\( (2n^4)^3 \\)", o: ["6n^{12}", "8n^7", "8n^{12}", "2n^{12}"], a: 2, t: "Cube the 2 AND multiply the power." },
+
+        // UNIT 2: STANDARD FORM (Based on 10585/10586)
+        { u: 2, q: "Write 56,000 in Standard Form", o: ["56 \\times 10^3", "5.6 \\times 10^4", "0.56 \\times 10^5", "5.6^4"], a: 1, t: "First number must be between 1 and 10." },
+        { u: 2, q: "Write 0.0004 in Standard Form", o: ["4 \\times 10^{-4}", "4 \\times 10^4", "0.4 \\times 10^{-3}", "4^{-4}"], a: 0, t: "Count steps to the right: negative power." },
+        { u: 2, q: "Ordinary number for \\( 3.2 \\times 10^3 \\)", o: ["320", "3200", "32000", "0.0032"], a: 1, t: "Positive power: move decimal right." },
+        { u: 2, q: "\\( (2 \\times 10^3) \\times (4 \\times 10^5) \\)", o: ["8 \\times 10^{15}", "6 \\times 10^8", "8 \\times 10^8", "8 \\times 10^2"], a: 2, t: "Multiply numbers, add indices." },
+        { u: 2, q: "\\( (6 \\times 10^7) \\div (2 \\times 10^3) \\)", o: ["3 \\times 10^{10}", "4 \\times 10^4", "3 \\times 10^4", "3 \\times 10^{21}"], a: 2, t: "Divide numbers, subtract indices." },
+        { u: 2, q: "\\( (3 \\times 10^4) + (2 \\times 10^4) \\)", o: ["5 \\times 10^8", "5 \\times 10^4", "6 \\times 10^4", "5^{10^4}"], a: 1, t: "If powers match, just add the front numbers." },
+        { u: 2, q: "\\( (5 \\times 10^6) \\times (3 \\times 10^2) \\) in Correct SF", o: ["15 \\times 10^8", "1.5 \\times 10^9", "1.5 \\times 10^8", "1.5 \\times 10^7"], a: 1, t: "15 is too big, adjust to 1.5 and increase the power." },
+        { u: 2, q: "Standard Form for 1,000,000", o: ["10^6", "1 \\times 10^6", "1 \\times 10^5", "Both A and B"], a: 3, t: "A million is 10 to the power of 6." },
+        { u: 2, q: "Convert \\( 9.1 \\times 10^{-2} \\)", o: ["0.091", "0.91", "910", "0.0091"], a: 0, t: "Small number: move decimal left 2 places." },
+        { u: 2, q: "Which is larger?", o: ["2 \\times 10^5", "9 \\times 10^4", "Equal", "10,000"], a: 0, t: "Compare the powers of 10 first." },
+
+        // UNIT 3: SIMULTANEOUS EQUATIONS (Based on 10591)
+        { u: 3, q: "Solve: \\( x + y = 10, x - y = 4 \\). Find \\( x \\).", o: ["7", "6", "5", "14"], a: 0, t: "Add the equations to eliminate y: 2x = 14." },
+        { u: 3, q: "Solve: \\( x + y = 10, x - y = 4 \\). Find \\( y \\).", o: ["3", "4", "7", "6"], a: 0, t: "Substitute x=7 back into x + y = 10." },
+        { u: 3, q: "In Elimination, what does 'SSS' stand for?", o: ["Same Side Solve", "Same Sign Subtract", "Signs Stay Same", "Solve Simple Sums"], a: 1, t: "Rule from KO: If signs are same, Subtract." },
+        { u: 3, q: "In Elimination, what does 'DSA' stand for?", o: ["Divide Subtract Add", "Different Sign Add", "Double Sign Always", "Done"], a: 1, t: "Rule from KO: If signs are Different, Add." },
+        { u: 3, q: "Solve using substitution: \\( y = 2x, x + y = 9 \\). Find \\( x \\).", o: ["3", "4.5", "2", "6"], a: 0, t: "Replace y with 2x: x + 2x = 9." },
+        { u: 3, q: "Solve: \\( 2x + y = 7, 2x - y = 1 \\). Find \\( x \\).", o: ["2", "4", "3", "1"], a: 0, t: "Add equations: 4x = 8." },
+        { u: 3, q: "If \\( y = x - 3 \\) and \\( 2x + y = 12 \\), find \\( x \\).", o: ["3", "5", "9", "4"], a: 1, t: "Substitute (x-3) into the second equation." },
+        { u: 3, q: "Find \\( y \\) if \\( 3x + y = 10 \\) and \\( x = 2 \\).", o: ["2", "4", "6", "8"], a: 1, t: "3(2) + y = 10." },
+        { u: 3, q: "To eliminate \\( 3x \\) from both: \\( 3x+y=5 \\) and \\( 3x+2y=8 \\), you should:", o: ["Add", "Subtract", "Multiply", "Divide"], a: 1, t: "Signs are the same (both positive 3x), so Subtract." },
+        { u: 3, q: "Simultaneous solution is where two lines...", o: ["Are parallel", "Intersect (cross)", "End", "Are vertical"], a: 1, t: "The crossing point is the answer for both." },
+
+        // UNIT 4: ALGEBRA (Based on 10589/10593)
+        { u: 4, q: "Expand: \\( 5(x + 3) \\)", o: ["5x + 3", "5x + 15", "x + 15", "8x"], a: 1, t: "Multiply the 5 by everything inside." },
+        { u: 4, q: "Factorise: \\( 4x - 12 \\)", o: ["4(x - 12)", "x(4 - 12)", "4(x - 3)", "2(2x - 12)"], a: 2, t: "Find the HCF: 4 goes into both." },
+        { u: 4, q: "Solve: \\( 4x + 2 = 22 \\)", o: ["6", "5", "4", "20"], a: 1, t: "Subtract 2, then divide by 4." },
+        { u: 4, q: "Expand: \\( x(x + 4) \\)", o: ["x^2 + 4", "2x + 4", "x^2 + 4x", "4x^2"], a: 2, t: "x times x is x-squared." },
+        { u: 4, q: "Solve: \\( 3(x - 2) = 12 \\)", o: ["4", "6", "14", "2"], a: 1, t: "Divide by 3 first: x - 2 = 4." },
+        { u: 4, q: "Factorise fully: \\( 6x^2 + 3x \\)", o: ["3(2x^2 + x)", "x(6x + 3)", "3x(2x + 1)", "3x(2x)"], a: 2, t: "Take out 3 and x." },
+        { u: 4, q: "Rearrange \\( y = x + a \\) for \\( x \\)", o: ["x = y + a", "x = y - a", "x = a - y", "x = ay"], a: 1, t: "Opposite of +a is -a." },
+        { u: 4, q: "Solve: \\( 5x - 3 = 2x + 9 \\)", o: ["4", "2", "6", "3"], a: 0, t: "Get x's on one side: 3x = 12." },
+        { u: 4, q: "Expand: \\( (x + 2)(x + 3) \\)", o: ["x^2 + 5", "x^2 + 6", "x^2 + 5x + 6", "2x + 5"], a: 2, t: "Use FOIL method." },
+        { u: 4, q: "Make \\( m \\) the subject: \\( y = mx + c \\)", o: ["m = (y-c)/x", "m = y-c-x", "m = y/x - c", "m = (y+c)/x"], a: 0, t: "Minus c, then divide by x." },
+
+        // UNIT 5: GRAPHS & MOTION (Based on 10590/10594)
+        { u: 5, q: "In \\( y = mx + c \\), what is \\( m \\)?", o: ["y-intercept", "gradient", "x-intercept", "constant"], a: 1, t: "m is the steepness." },
+        { u: 5, q: "In \\( y = 3x - 5 \\), what is the y-intercept?", o: ["3", "-5", "5", "0"], a: 1, t: "c is the number on the end." },
+        { u: 5, q: "Formula for Speed?", o: ["T/D", "D x T", "D/T", "D + T"], a: 2, t: "Distance divided by Time." },
+        { u: 5, q: "Gradient of a Distance-Time graph shows?", o: ["Distance", "Acceleration", "Speed", "Time"], a: 2, t: "Steeper line = faster speed." },
+        { u: 5, q: "A horizontal line on a Distance-Time graph means?", o: ["Fast", "Stopped", "Constant Speed", "Returning"], a: 1, t: "Distance isn't changing, so it's stationary." },
+        { u: 5, q: "Find gradient between (0,0) and (2,10)", o: ["2", "10", "5", "20"], a: 2, t: "Rise / Run = 10 / 2." },
+        { u: 5, q: "Speed: 100 miles in 2 hours?", o: ["200mph", "50mph", "25mph", "100mph"], a: 1, t: "100 / 2 = 50." },
+        { u: 5, q: "Time taken to travel 30km at 10km/h?", o: ["3 hours", "300 mins", "0.3 hours", "20 mins"], a: 0, t: "Time = Distance / Speed." },
+        { u: 5, q: "Line parallel to \\( y = 2x + 5 \\)?", o: ["y = 5x + 2", "y = 2x - 1", "y = -2x + 5", "y = x + 2"], a: 1, t: "Parallel lines have the SAME gradient (m)." },
+        { u: 5, q: "Gradient of a Velocity-Time graph shows?", o: ["Speed", "Distance", "Acceleration", "Fuel"], a: 2, t: "Rate of change of velocity." }
+    ];
+
+    function showUnit(u, btn) {
+        document.querySelectorAll('.unit-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('unit-' + u).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    const content = document.getElementById('quiz-content');
+    for(let u=1; u<=5; u++) {
+        const section = document.createElement('div');
+        section.id = 'unit-' + u;
+        section.className = 'unit-section' + (u===1 ? ' active' : '');
+        
+        const unitQuestions = examData.filter(d => d.u === u);
+        unitQuestions.forEach((item, i) => {
+            section.innerHTML += `
+                <div class="card">
+                    <span class="q-text">${item.q}</span>
+                    <div class="options">
+                        ${item.opts.map((o, idx) => `<button type="button" class="opt-btn" onclick="select(this, ${item.u}, ${i}, ${idx})">${o}</button>`).join('')}
+                    </div>
+                    <button type="button" class="tip-toggle" onclick="toggleTip(this)">💡 Need a hint?</button>
+                    <div class="tip-box">${item.t}</div>
+                </div>
+            `;
+        });
+        content.appendChild(section);
+    }
+
+    let userScores = {};
+    function select(btn, u, qIdx, optIdx) {
+        const parent = btn.parentElement;
+        parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        
+        // Find correct answer
+        const unitQuestions = examData.filter(d => d.u === u);
+        const isCorrect = unitQuestions[qIdx].a === optIdx;
+        userScores[`${u}-${qIdx}`] = isCorrect ? 1 : 0;
+    }
+
+    function toggleTip(btn) {
+        const box = btn.nextElementSibling;
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function finishExam() {
+        const email = document.getElementById('userEmail').value;
+        if(!email) { alert("Please enter an email to send the report!"); return; }
+        
+        let total = Object.values(userScores).reduce((a, b) => a + b, 0);
+        let percent = Math.round((total / 50) * 100);
+        
+        const body = `YEAR 9 MATHS EXAM REPORT\n\nTotal Score: ${total}/50\nPercentage: ${percent}%\n\nTopics: Indices, Standard Form, Simultaneous Equations, Algebra, and Motion Graphs.\n\nKeep using your Knowledge Organizers to improve!`;
+        window.location.href = `mailto:${email}?subject=Maths Exam Results - ${percent}%&body=${encodeURIComponent(body)}`;
+    }
+</script>
+
+</body>
+</html>
 <body>
 
 <div class="header">
