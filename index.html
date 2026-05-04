@@ -3,37 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Year 9 Maths Revision Portal</title>
+    <title>Year 9 Maths: 50-Question Mega Test</title>
     <style>
-        body { font-family: -apple-system, sans-serif; line-height: 1.6; padding: 20px; background: #f4f4f9; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; text-align: center; }
-        .question { margin-bottom: 20px; padding: 15px; border-left: 5px solid #3498db; background: #f9f9f9; }
-        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        button { width: 100%; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
-        #results { margin-top: 20px; font-weight: bold; text-align: center; display: none; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; padding: 15px; background: #f0f2f5; color: #1c1e21; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        h1 { color: #1a73e8; text-align: center; border-bottom: 2px solid #e8eaed; padding-bottom: 10px; }
+        .section-head { background: #e8f0fe; padding: 10px; border-radius: 8px; margin-top: 30px; font-weight: bold; color: #1967d2; }
+        .question { margin: 20px 0; padding: 15px; border-left: 4px solid #34a853; background: #fff; border-radius: 0 8px 8px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        input { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #dadce0; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 30px; transition: background 0.3s; }
+        button:hover { background: #1557b0; }
+        #results { margin-top: 30px; padding: 20px; border-radius: 10px; text-align: center; display: none; font-size: 20px; }
+        .correct { background: #d4edda; color: #155724; }
+        .wrong { background: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Year 9 Maths Test</h1>
+        <h1>Year 9 Maths Revision</h1>
+        <p style="text-align:center;">Topics: Indices, Standard Form, Equations, and Proportion.</p>
+        
         <form id="quizForm">
-            <div class="question">
-                <p>1. Simplify $a^6 \times a^4$:</p>
-                <input type="text" id="q1" placeholder="Type your answer (e.g., a^10)">
-            </div>
+            <div class="section-head">Section 1: Indices & Roots</div>
+            <div class="question"><p>1. Simplify $a^3 \times a^2$</p><input type="text" id="q1"></div>
+            <div class="question"><p>2. Simplify $b^4 \times b$</p><input type="text" id="q2"></div>
+            <div class="question"><p>3. Simplify $d^{-5} \times d^{-1}$</p><input type="text" id="q3"></div>
+            <div class="question"><p>4. Simplify $m^6 \div m^2$</p><input type="text" id="q4"></div>
+            <div class="question"><p>5. Simplify $(6n^3)^2$</p><input type="text" id="q5"></div>
+            <div class="question"><p>6. Simplify $(a^6)^4$</p><input type="text" id="q6"></div>
+            <div class="question"><p>7. Solve $4^{-2}$ (as a fraction)</p><input type="text" id="q7"></div>
+            <div class="question"><p>8. Simplify $3a^4 \times 2a^2$</p><input type="text" id="q8"></div>
+            <div class="question"><p>9. Simplify $(2x^2)^3$</p><input type="text" id="q9"></div>
+            <div class="question"><p>10. Solve $9^0$</p><input type="text" id="q10"></div>
 
-            <div class="question">
-                <p>2. Write 3000 in Standard Form:</p>
-                <input type="text" id="q2" placeholder="e.g., 3 x 10^3">
-            </div>
+            <div class="section-head">Section 2: Standard Form</div>
+            <div class="question"><p>11. Write 74,000 in Standard Form</p><input type="text" id="q11"></div>
+            <div class="question"><p>12. Write 1,042,000 in Standard Form</p><input type="text" id="q12"></div>
+            <div class="question"><p>13. Write 0.009 in Standard Form</p><input type="text" id="q13"></div>
+            <div class="question"><p>14. Write 0.00000124 in Standard Form</p><input type="text" id="q14"></div>
+            <div class="question"><p>15. $(5 \times 10^2) \times (2 \times 10^5)$</p><input type="text" id="q15"></div>
+            <div class="question"><p>16. $(4 \times 10^3) \times (3 \times 10^8)$</p><input type="text" id="q16"></div>
+            <div class="question"><p>17. $(8 \times 10^6) \div (2 \times 10^5)$</p><input type="text" id="q17"></div>
+            <div class="question"><p>18. $(4.8 \times 10^2) \div (3 \times 10^4)$</p><input type="text" id="q18"></div>
+            <div class="question"><p>19. $(7 \times 10^6) + (5 \times 10^5)$</p><input type="text" id="q19"></div>
+            <div class="question"><p>20. $(5 \times 10^{-2}) - (3.7 \times 10^{-3})$</p><input type="text" id="q20"></div>
 
-            <div class="question">
-                <p>3. If $2x + y = 12$ and $y = x - 3$, what is the value of $x$?</p>
-                <input type="text" id="q3" placeholder="Enter number only">
-            </div>
+            <div class="section-head">Section 3: Simultaneous Equations</div>
+            <p>Solve for $x$ and $y$:</p>
+            <div class="question"><p>21. $3x + 2y = 4$ and $4x + 6y = 22$. What is $x$?</p><input type="text" id="q21"></div>
+            <div class="question"><p>22. (Same as Q21) What is $y$?</p><input type="text" id="q22"></div>
+            <div class="question"><p>23. $x + 2y = 4$ and $x = y - 5$. What is $x$?</p><input type="text" id="q23"></div>
+            <div class="question"><p>24. (Same as Q23) What is $y$?</p><input type="text" id="q24"></div>
+            <div class="question"><p>25. $2x + y = 12$ and $y = x - 3$. What is $x$?</p><input type="text" id="q25"></div>
+            <div class="question"><p>26. $2x + 2y = 14$ and $3x - y = 9$. What is $y$?</p><input type="text" id="q26"></div>
+            <div class="question"><p>27. If signs are different in elimination, do you Add or Subtract? (DSA)</p><input type="text" id="q27"></div>
+            <div class="question"><p>28. If signs are the same, do you Add or Subtract? (SSS)</p><input type="text" id="q28"></div>
+            <div class="question"><p>29. Solve $x + y = 10, x - y = 2$. What is $x$?</p><input type="text" id="q29"></div>
+            <div class="question"><p>30. Solve $x + y = 10, x - y = 2$. What is $y$?</p><input type="text" id="q30"></div>
 
-            <button type="button" onclick="checkAnswers()">Submit Test</button>
+            <div class="section-head">Section 4: Solving & Rearranging</div>
+            <div class="question"><p>31. Solve $7(x + 2) = 35$</p><input type="text" id="q31"></div>
+            <div class="question"><p>32. Solve $4x - 12 = 28$</p><input type="text" id="q32"></div>
+            <div class="question"><p>33. Solve $4x - 12 = 2x + 20$</p><input type="text" id="q33"></div>
+            <div class="question"><p>34. Solve $5(x - 3) = 20$</p><input type="text" id="q34"></div>
+            <div class="question"><p>35. Rearrange $y = 3x + 4$ to make $x$ the subject</p><input type="text" id="q35"></div>
+            <div class="question"><p>36. Rearrange $Q = (2r - 7)/3$ to make $r$ the subject</p><input type="text" id="q36"></div>
+            <div class="question"><p>37. Factorise $9x + 18$</p><input type="text" id="q37"></div>
+            <div class="question"><p>38. Fully factorise $6e^2 - 3e$</p><input type="text" id="q38"></div>
+            <div class="question"><p>39. Expand $4m(3m - 2)$</p><input type="text" id="q39"></div>
+            <div class="question"><p>40. Expand $(x+2)(x-5)$</p><input type="text" id="q40"></div>
+
+            <div class="section-head">Section 5: Proportion & Distance-Time</div>
+            <div class="question"><p>41. $e \propto f$. If $e=3$ when $f=36$, find $f$ when $e=4$</p><input type="text" id="q41"></div>
+            <div class="question"><p>42. $x$ is inversely proportional to $y$. If $x=12$ when $y=4$, find $x$ when $y=3$</p><input type="text" id="q42"></div>
+            <div class="question"><p>43. In a Distance-Time graph, what does a horizontal line mean?</p><input type="text" id="q43"></div>
+            <div class="question"><p>44. Speed = Distance divided by ?</p><input type="text" id="q44"></div>
+            <div class="question"><p>45. Calculate speed: 21km in 1 hour</p><input type="text" id="q45"></div>
+            <div class="question"><p>46. Simplify $3a^2 + 5a + 2a^2 - 2a$</p><input type="text" id="q46"></div>
+            <div class="question"><p>47. Find the gradient of $y = 4x - 3$</p><input type="text" id="q47"></div>
+            <div class="question"><p>48. Find the y-intercept of $y = 4x - 3$</p><input type="text" id="q48"></div>
+            <div class="question"><p>49. $a=5, b=2$. Solve $3a + b$</p><input type="text" id="q49"></div>
+            <div class="question"><p>50. $a=5$. Solve $a^2$</p><input type="text" id="q50"></div>
+
+            <button type="button" onclick="calculateScore()">Submit 50 Questions</button>
+        </form>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function calculateScore() {
+            let score = 0;
+            const answers = {
+                q1: "a^5", q2: "b^5", q3: "d^-6", q4: "m^4", q5: "36n^6",
+                q6: "a^24", q7: "1/16", q8: "6a^6", q9: "8x^6", q10: "1",
+                q11: "7.4x10^4", q12: "
         </form>
         <div id="results"></div>
     </div>
