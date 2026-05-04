@@ -8,30 +8,31 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root { --primary: #1a73e8; --bg: #f8f9fa; }
-        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 0; color: #202124; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 0; color: #202124; line-height: 1.5; }
         .header { background: #1a73e8; color: white; padding: 20px 15px; text-align: center; }
         .nav-container { position: sticky; top: 0; background: white; padding: 10px 5px; border-bottom: 1px solid #ddd; display: flex; overflow-x: auto; z-index: 100; }
-        .nav-btn { margin: 0 4px; padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; background: #f1f3f4; white-space: nowrap; font-weight: bold; cursor: pointer; }
-        .nav-btn.active { background: var(--primary); color: white; }
-        .container { padding: 15px; max-width: 500px; margin: auto; }
+        .nav-btn { margin: 0 4px; padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; background: #f1f3f4; white-space: nowrap; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .nav-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
         .unit-section { display: none; }
         .unit-section.active { display: block; }
-        .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .q-title { font-weight: 700; color: var(--primary); margin-bottom: 10px; display: block; }
         .options { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .opt-btn { padding: 14px; border: 2px solid #eee; border-radius: 10px; background: white; text-align: left; font-size: 1rem; cursor: pointer; }
+        .opt-btn { padding: 14px; border: 2px solid #eee; border-radius: 10px; background: white; text-align: left; font-size: 1rem; cursor: pointer; transition: 0.2s; }
         .opt-btn.selected { background: #e8f0fe; border-color: var(--primary); color: var(--primary); font-weight: bold; }
-        .tip-toggle { background: none; border: none; color: #e67e22; font-weight: bold; margin-top: 15px; cursor: pointer; width: 100%; text-align: left; }
-        .tip-box { display: none; margin-top: 10px; padding: 12px; background: #fffde7; border-left: 4px solid #fbc02d; font-size: 0.9rem; }
-        .footer-card { background: #202124; color: white; border-radius: 15px; padding: 25px; text-align: center; margin-top: 20px; }
-        .email-input { width: 90%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: none; font-size: 1rem; }
-        .submit-btn { background: #34a853; color: white; border: none; width: 90%; padding: 15px; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .tip-toggle { background: none; border: none; color: #e67e22; font-weight: bold; margin-top: 15px; cursor: pointer; width: 100%; text-align: left; padding: 0; }
+        .tip-box { display: none; margin-top: 10px; padding: 12px; background: #fffde7; border-left: 4px solid #fbc02d; font-size: 0.9rem; border-radius: 4px; }
+        .footer-card { background: #202124; color: white; border-radius: 15px; padding: 25px; text-align: center; margin-top: 30px; }
+        .email-input { width: 90%; padding: 14px; margin-bottom: 15px; border-radius: 8px; border: none; font-size: 1rem; }
+        .submit-btn { background: #34a853; color: white; border: none; width: 90%; padding: 16px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1 style="margin:0; font-size:1.3rem;">Year 9 Maths Mastery</h1>
-    <p style="margin:5px 0 0; font-size:0.9rem;">Interactive Revision Portal</p>
+    <h1 style="margin:0; font-size:1.4rem;">Year 9 Maths Mastery</h1>
+    <p style="margin:5px 0 0; font-size:0.9rem; opacity:0.9;">50 Questions • Full Revision Exam</p>
 </div>
 
 <div class="nav-container">
@@ -46,18 +47,73 @@
     <div id="quiz-content"></div>
     <div class="footer-card">
         <h3>Exam Complete?</h3>
-        <input type="email" id="userEmail" class="email-input" placeholder="Enter school email...">
+        <p>Enter email to receive your score report:</p>
+        <input type="email" id="userEmail" class="email-input" placeholder="student@school.com" required>
         <button class="submit-btn" onclick="finishExam()">Submit & Email Results</button>
     </div>
 </div>
 
 <script>
     const examData = [
-        { u: 1, q: "Simplify \\( a^6 \\times a^4 \\)", o: ["\\( a^{24} \\)", "\\( a^{10} \\)", "\\( a^2 \\)"], a: 1, t: "Indices Multiplication: Add the powers (6+4)." },
-        { u: 2, q: "Write 0.005 in Standard Form", o: ["\\( 5 \\times 10^{-3} \\)", "\\( 5 \\times 10^3 \\)"], a: 0, t: "Standard Form for decimals uses negative powers." },
+        // UNIT 1: INDICES
+        { u: 1, q: "Simplify \\( a^7 \\times a^3 \\)", o: ["\\( a^{21} \\)", "\\( a^{10} \\)", "\\( a^4 \\)"], a: 1, t: "Multiplication: Add the powers." },
+        { u: 1, q: "Simplify \\( b^8 \\div b^2 \\)", o: ["\\( b^4 \\)", "\\( b^{10} \\)", "\\( b^6 \\)"], a: 2, t: "Division: Subtract the powers." },
+        { u: 1, q: "Simplify \\( (x^4)^3 \\)", o: ["\\( x^7 \\)", "\\( x^{12} \\)", "\\( x^{43} \\)"], a: 1, t: "Power of a Power: Multiply the powers." },
+        { u: 1, q: "What is \\( 5^0 \\)?", o: ["0", "1", "5"], a: 1, t: "Anything to the power of 0 is 1." },
+        { u: 1, q: "Evaluate \\( 3^{-2} \\)", o: ["-6", "-9", "\\( 1/9 \\)"], a: 2, t: "Negative indices mean 1 over the positive power." },
+        { u: 1, q: "Simplify \\( 2y^2 \\times 4y^5 \\)", o: ["\\( 8y^7 \\)", "\\( 6y^7 \\)", "\\( 8y^{10} \\)"], a: 0, t: "Multiply the coefficients, add the powers." },
+        { u: 1, q: "Evaluate \\( \sqrt{144} \\)", o: ["12", "14", "72"], a: 0, t: "Find the square root." },
+        { u: 1, q: "Simplify \\( 15x^9 \\div 3x^3 \\)", o: ["\\( 5x^3 \\)", "\\( 12x^6 \\)", "\\( 5x^6 \\)"], a: 2, t: "Divide numbers, subtract powers." },
+        { u: 1, q: "Express as a fraction: \\( 4^{-1} \\)", o: ["-4", "\\( 1/4 \\)", "0.4"], a: 1, t: "Power of -1 is the reciprocal." },
+        { u: 1, q: "Simplify \\( (2a^2)^3 \\)", o: ["\\( 8a^6 \\)", "\\( 6a^6 \\)", "\\( 8a^5 \\)"], a: 0, t: "Cube the 2 AND multiply the power." },
+
+        // UNIT 2: STANDARD FORM
+        { u: 2, q: "Write 45,000 in Standard Form", o: ["\\( 45 \\times 10^3 \\)", "\\( 4.5 \\times 10^4 \\)", "\\( 4.5^4 \\)"], a: 1, t: "The first number must be between 1 and 10." },
+        { u: 2, q: "Write 0.0007 in Standard Form", o: ["\\( 7 \\times 10^{-4} \\)", "\\( 7 \\times 10^4 \\)", "\\( 0.7 \\times 10^{-3} \\)"], a: 0, t: "Count right for negative powers." },
+        { u: 2, q: "Ordinary number for \\( 3.2 \\times 10^2 \\)", o: ["32", "320", "3200"], a: 1, t: "Move decimal 2 places right." },
+        { u: 2, q: "Ordinary number for \\( 5.1 \\times 10^{-3} \\)", o: ["0.051", "5100", "0.0051"], a: 2, t: "Move decimal 3 places left." },
+        { u: 2, q: "\\( (2 \\times 10^3) \\times (3 \\times 10^4) \\)", o: ["\\( 6 \\times 10^7 \\)", "\\( 5 \\times 10^7 \\)", "\\( 6 \\times 10^{12} \\)"], a: 0, t: "Multiply numbers, add indices." },
+        { u: 2, q: "\\( (8 \\times 10^9) \\div (2 \\times 10^3) \\)", o: ["\\( 4 \\times 10^3 \\)", "\\( 4 \\times 10^6 \\)", "\\( 6 \\times 10^6 \\)"], a: 1, t: "Divide numbers, subtract indices." },
+        { u: 2, q: "Which is Standard Form?", o: ["\\( 12 \\times 10^2 \\)", "\\( 0.5 \\times 10^3 \\)", "\\( 1.2 \\times 10^2 \\)"], a: 2, t: "Front number must be \\( 1 \\le n < 10 \\)." },
+        { u: 2, q: "Write 1,000,000 in Standard Form", o: ["\\( 10^6 \\)", "\\( 1 \\times 10^5 \\)", "\\( 10^7 \\)"], a: 0, t: "Count the zeros/places." },
+        { u: 2, q: "\\( (4.1 \\times 10^5) + (2.3 \\times 10^5) \\)", o: ["\\( 6.4 \\times 10^{10} \\)", "\\( 6.4 \\times 10^5 \\)", "\\( 5.4 \\times 10^5 \\)"], a: 1, t: "If powers match, add front numbers." },
+        { u: 2, q: "Standard Form for 0.1", o: ["\\( 1 \\times 10^{-1} \\)", "\\( 10^1 \\)", "\\( 1 \\times 10^0 \\)"], a: 0, t: "One place to the right." },
+
+        // UNIT 3: EQUATIONS (Simultaneous)
         { u: 3, q: "If signs are the same (+ and +), you should:", o: ["Add (DSA)", "Subtract (SSS)"], a: 1, t: "SSS: Same Sign Subtract." },
-        { u: 4, q: "Factorise \\( 5x + 10 \\)", o: ["\\( 5(x+2) \\)", "\\( 5(x+10) \\)"], a: 0, t: "Find the Highest Common Factor (5)." },
-        { u: 5, q: "Gradient of \\( y = 3x - 4 \\)?", o: ["3", "-4", "x"], a: 0, t: "Gradient is the 'm' in y=mx+c." }
+        { u: 3, q: "If signs are different (+ and -), you should:", o: ["Add (DSA)", "Subtract (SSS)"], a: 0, t: "DSA: Different Sign Add." },
+        { u: 3, q: "Solve for \\( x \\): \\( x+y=10, x-y=4 \\)", o: ["6", "7", "14"], a: 1, t: "Add equations: \\( 2x=14 \\)." },
+        { u: 3, q: "Solve for \\( y \\): \\( x+y=10, x-y=4 \\)", o: ["3", "4", "7"], a: 0, t: "If \\( x=7 \\), then \\( 7+y=10 \\)." },
+        { u: 3, q: "Substitution: \\( y=2x \\) and \\( x+y=9 \\). Find \\( x \\).", o: ["2", "3", "4.5"], a: 1, t: "Substitute: \\( x+2x=9 \\)." },
+        { u: 3, q: "To eliminate \\( 3y \\) from \\( 2x+3y=10 \\) and \\( 5x-3y=4 \\):", o: ["Add", "Subtract"], a: 0, t: "Signs are different (+ and -), so Add (DSA)." },
+        { u: 3, q: "Solve: \\( 2x=10 \\)", o: ["2", "5", "20"], a: 1, t: "Divide both sides by 2." },
+        { u: 3, q: "First step for \\( 3x+y=10 \\) and \\( x+y=4 \\)?", o: ["Add", "Subtract"], a: 1, t: "Signs of y are both positive, so Subtract (SSS)." },
+        { u: 3, q: "Solve for \\( y \\) if \\( x=2 \\) and \\( 3x+y=10 \\)", o: ["4", "8", "6"], a: 0, t: "\\( 3(2)+y=10 \\)." },
+        { u: 3, q: "Simultaneous solutions represent where lines:", o: ["Are parallel", "Intersect", "Stay away"], a: 1, t: "The intersection is the shared solution." },
+
+        // UNIT 4: ALGEBRA (Expanding/Factorising)
+        { u: 4, q: "Expand \\( 4(x+5) \\)", o: ["\\( 4x+5 \\)", "\\( 4x+20 \\)", "\\( x+20 \\)"], a: 1, t: "Multiply 4 by both terms." },
+        { u: 4, q: "Factorise \\( 6x-12 \\)", o: ["\\( 6(x-2) \\)", "\\( 6(x-12) \\)", "\\( x(6-12) \\)"], a: 0, t: "HCF is 6." },
+        { u: 4, q: "Expand \\( x(x+3) \\)", o: ["\\( x^2+3 \\)", "\\( 2x+3 \\)", "\\( x^2+3x \\)"], a: 2, t: "\\( x \times x = x^2 \\)." },
+        { u: 4, q: "Solve \\( 3x-2=10 \\)", o: ["4", "12", "3"], a: 0, t: "Add 2, then divide by 3." },
+        { u: 4, q: "Factorise \\( x^2+5x \\)", o: ["\\( x(x+5) \\)", "\\( 5x(x+1) \\)", "\\( x^2(1+5) \\)"], a: 0, t: "Take out common factor x." },
+        { u: 4, q: "Expand \\( (x+2)(x+3) \\)", o: ["\\( x^2+5 \\)", "\\( x^2+5x+6 \\)", "\\( 2x+5 \\)"], a: 1, t: "Use FOIL." },
+        { u: 4, q: "Rearrange \\( y=x+a \\) for \\( x \\)", o: ["\\( x=y-a \\)", "\\( x=y+a \\)", "\\( x=a-y \\)"], a: 0, t: "Subtract a from both sides." },
+        { u: 4, q: "Factorise fully \\( 10y-15 \\)", o: ["\\( 10(y-1.5) \\)", "\\( 5(2y-3) \\)", "\\( 2(5y-7.5) \\)"], a: 1, t: "HCF is 5." },
+        { u: 4, q: "Solve \\( \frac{x}{4} = 5 \\)", o: ["1.25", "9", "20"], a: 2, t: "Multiply by 4." },
+        { u: 4, q: "Expand \\( -2(x-4) \\)", o: ["\\( -2x-8 \\)", "\\( -2x+8 \\)", "\\( 2x+8 \\)"], a: 1, t: "Negative times negative is positive." },
+
+        // UNIT 5: GRAPHS (Motion/Linear)
+        { u: 5, q: "Gradient of \\( y=4x+1 \\)?", o: ["4", "1", "x"], a: 0, t: "m is the number before x." },
+        { u: 5, q: "Y-intercept of \\( y=2x-7 \\)?", o: ["2", "7", "-7"], a: 2, t: "c is the constant on the end." },
+        { u: 5, q: "Formula for Speed?", o: ["\\( D \times T \\)", "\\( D/T \\)", "\\( T/D \\)"], a: 1, t: "Distance divided by Time." },
+        { u: 5, q: "A horizontal line on Distance-Time graph means:", o: ["Constant Speed", "Stationary", "Acceleration"], a: 1, t: "Distance isn't changing." },
+        { u: 5, q: "Gradient of a Distance-Time graph shows:", o: ["Time", "Distance", "Speed"], a: 2, t: "Steepness = Speed." },
+        { u: 5, q: "Speed if you travel 20 miles in 2 hours?", o: ["40mph", "10mph", "22mph"], a: 1, t: "\\( 20 / 2 = 10 \\)." },
+        { u: 5, q: "Line parallel to \\( y=3x+5 \\)?", o: ["\\( y=3x-2 \\)", "\\( y=2x+5 \\)", "\\( y=-3x+1 \\)"], a: 0, t: "Parallel lines have the same gradient." },
+        { u: 5, q: "Distance if speed is 10mph and time is 3 hours?", o: ["3.3 miles", "13 miles", "30 miles"], a: 2, t: "\\( D = S \times T \\)." },
+        { u: 5, q: "Gradient formula?", o: ["\\( \text{Rise/Run} \\)", "\\( \text{Run/Rise} \\)", "\\( \text{Rise} \times \text{Run} \\)"], a: 0, t: "Vertical change over horizontal change." },
+        { u: 5, q: "Where does \\( y=x \\) pass through?", o: ["(0,1)", "(1,0)", "(0,0)"], a: 2, t: "It's a direct proportion line." }
     ];
 
     function showUnit(u, btn) {
@@ -66,6 +122,7 @@
         document.getElementById('unit-' + u).classList.add('active');
         btn.classList.add('active');
         if (window.MathJax) MathJax.typesetPromise();
+        window.scrollTo(0,0);
     }
 
     const content = document.getElementById('quiz-content');
@@ -73,10 +130,12 @@
         const section = document.createElement('div');
         section.id = 'unit-' + u;
         section.className = 'unit-section' + (u===1 ? ' active' : '');
+        
         examData.filter(d => d.u === u).forEach((item, i) => {
             section.innerHTML += `
                 <div class="card">
-                    <span style="font-weight:600; font-size:1.1rem;">${item.q}</span>
+                    <span class="q-title">Question ${i+1}</span>
+                    <span style="font-size:1.1rem;">${item.q}</span>
                     <div class="options">
                         ${item.o.map((opt, idx) => `<button class="opt-btn" onclick="select(this, ${u}, ${i}, ${idx})">${opt}</button>`).join('')}
                     </div>
@@ -91,7 +150,8 @@
     function select(btn, u, q, a) {
         btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
-        results[`${u}-${q}`] = (a === examData.filter(d => d.u === u)[q].a);
+        const correct = examData.filter(d => d.u === u)[q].a;
+        results[`${u}-${q}`] = (a === correct);
     }
 
     function toggleTip(btn) {
@@ -101,9 +161,10 @@
 
     function finishExam() {
         const email = document.getElementById('userEmail').value;
-        if(!email) return alert("Enter email!");
+        if(!email) return alert("Please enter your email!");
         let score = Object.values(results).filter(v => v).length;
-        window.location.href = `mailto:${email}?subject=Results&body=Score: ${score}`;
+        let total = examData.length;
+        window.location.href = `mailto:${email}?subject=Maths Exam Results&body=I completed the Year 9 Maths Revision!%0D%0AScore: ${score} / ${total}%0D%0AKeep up the hard work!`;
     }
 </script>
 </body>
