@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year 9 Maths Revision Portal</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; line-height: 1.6; padding: 20px; background: #f4f4f9; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .question { margin-bottom: 20px; padding: 15px; border-left: 5px solid #3498db; background: #f9f9f9; }
+        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+        #results { margin-top: 20px; font-weight: bold; text-align: center; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Year 9 Maths Test</h1>
+        <form id="quizForm">
+            <div class="question">
+                <p>1. Simplify $a^6 \times a^4$:</p>
+                <input type="text" id="q1" placeholder="Type your answer (e.g., a^10)">
+            </div>
+
+            <div class="question">
+                <p>2. Write 3000 in Standard Form:</p>
+                <input type="text" id="q2" placeholder="e.g., 3 x 10^3">
+            </div>
+
+            <div class="question">
+                <p>3. If $2x + y = 12$ and $y = x - 3$, what is the value of $x$?</p>
+                <input type="text" id="q3" placeholder="Enter number only">
+            </div>
+
+            <button type="button" onclick="checkAnswers()">Submit Test</button>
+        </form>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            let score = 0;
+            const q1 = document.getElementById('q1').value.toLowerCase().replace(/\s/g, '');
+            const q2 = document.getElementById('q2').value.toLowerCase().replace(/\s/g, '');
+            const q3 = document.getElementById('q3').value;
+
+            if (q1 === "a^10") score++;
+            if (q2 === "3x10^3" || q2 === "3*10^3") score++;
+            if (q3 === "5") score++;
+
+            const res = document.getElementById('results');
+            res.style.display = "block";
+            res.innerHTML = "You scored " + score + "/3! Refresh to try again.";
+        }
+    </script>
+</body>
+</html>
